@@ -1,9 +1,9 @@
 package com.n256coding.crosssiterequestdscookiedemo.controller;
 
-import com.n256coding.crosssiterequestdscookiedemo.model.MyData;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
@@ -12,32 +12,27 @@ import java.util.Map;
 @RestController
 public class RequestController {
 
-//    @PostMapping("/csrf")
-//    public Map<String, String> getCsrfOf(@CookieValue("JSESSIONID") String sessionId) {
-//        return Collections.singletonMap("csrf", sessionStore.getCsrfOf(sessionId));
-//    }
-
     @PostMapping(value = "/mydata")
-    public String setInformation(@CookieValue("JSESSIONID") String sessionId, @RequestBody MyData myData,
+    public Map<String, String> setInformation(@CookieValue("JSESSIONID") String sessionId,
+                                              @CookieValue("csrf_token") String csrfTokenInCookie,
                                               HttpServletRequest request, HttpServletResponse response) {
+        String csrfTokenInBody = request.getParameter("csrf_token");
+        String accountNumber = request.getParameter("receiver_account_number");
+        double value = Double.parseDouble(request.getParameter("value"));
 
-//        new ModelAndView()
-//        if (sessionStore.getCsrfOf(sessionId).equals(myData.csrf_token)) {
-//            return Collections.singletonMap("response", "success");
-//        } else {
-//            return Collections.singletonMap("response", "invalid");
-//        }
-        return "Hello";
+        if(csrfTokenInBody == null || csrfTokenInCookie == null){
+            response.setStatus(403);    //Forbidden
+            return Collections.singletonMap("response", "forbidden");
+        }
+
+        if(csrfTokenInBody.equals(csrfTokenInCookie)){
+            response.setStatus(200);    //Ok
+            return Collections.singletonMap("response", "success");
+        }
+        else{
+            response.setStatus(403);    //Forbidden
+            return Collections.singletonMap("response", "forbidden");
+        }
     }
 
-    @GetMapping("/test")
-    public Map<String, String> getTestItem(HttpServletRequest request, HttpServletResponse response){
-        Cookie cookie = new Cookie("test_cookie_name", "test_cookie_value");
-        cookie.setSecure(false);
-        cookie.setMaxAge(60 * 60 * 24);
-        cookie.setPath("/");
-
-        response.addCookie(cookie);
-        return Collections.singletonMap("response", "success");
-    }
 }

