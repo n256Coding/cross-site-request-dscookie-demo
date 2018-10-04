@@ -4,19 +4,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MyData {
-    public String car_brand;
-    public String drink;
-    public String tv_show;
+    public String receiver_account_number;
+    public double value;
     public String csrf_token;
 
     @JsonCreator
-    public MyData(@JsonProperty("car_brand") String car_brand,
-                  @JsonProperty("drink") String drink,
-                  @JsonProperty("tv_show") String tv_show,
+    public MyData(@JsonProperty("receiver_account_number") String receiver_account_number,
+                  @JsonProperty("value") double value,
                   @JsonProperty("csrf_token") String csrf_token) {
-        this.car_brand = car_brand;
-        this.drink = drink;
-        this.tv_show = tv_show;
+        this.receiver_account_number = receiver_account_number;
+        this.value = value;
         this.csrf_token = csrf_token;
     }
 }

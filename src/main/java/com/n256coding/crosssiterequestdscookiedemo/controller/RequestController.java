@@ -20,17 +20,23 @@ public class RequestController {
         String accountNumber = request.getParameter("receiver_account_number");
         double value = Double.parseDouble(request.getParameter("value"));
 
-        if(csrfTokenInBody == null || csrfTokenInCookie == null){
+        System.out.println("CSRF token in cookie: " + csrfTokenInCookie);
+        System.out.println("CSRF token in body: " + csrfTokenInBody);
+
+
+        if (csrfTokenInBody == null || csrfTokenInCookie == null) {
             response.setStatus(403);    //Forbidden
+            System.out.println("CSRF tokens not matched, connection prevented");
             return Collections.singletonMap("response", "forbidden");
         }
 
-        if(csrfTokenInBody.equals(csrfTokenInCookie)){
+        if (csrfTokenInBody.equals(csrfTokenInCookie)) {
             response.setStatus(200);    //Ok
+            System.out.println("CSRF tokens matched, connection allowed");
             return Collections.singletonMap("response", "success");
-        }
-        else{
+        } else {
             response.setStatus(403);    //Forbidden
+            System.out.println("CSRF tokens not matching, connection prevented");
             return Collections.singletonMap("response", "forbidden");
         }
     }
